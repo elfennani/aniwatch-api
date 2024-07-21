@@ -1,0 +1,16 @@
+{
+  "extends": "fastify-tsconfig",
+  "compilerOptions": {
+    "outDir": "dist",
+    "sourceMap": true,
+    "noImplicitThis": false,
+    "plugins": [ 
+      { 
+        "name": "gql.tada/ts-plugin", 
+        "schema": "https://graphql.anilist.co/graphql", 
+        "tadaOutputLocation": "./src/graphql-env.d.ts"
+      } 
+    ] 
+  },
+  "include": ["src/**/*.ts"],
+}
