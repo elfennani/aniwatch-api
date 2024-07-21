@@ -1,10 +1,16 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npm run build:ts && fastify start -l info dist/serverless.js",
-  "rewrites": [
+  "version": 2,
+  "builds": [
       {
-          "source": "/(.*)",
-          "destination": "/dist/serverless.js"
+          "src": "dist/serverless.js",
+          "use": "@vercel/node",
+          "config": { "includeFiles": ["dist/**"] }
+      }
+  ],
+  "routes": [
+      {
+          "src": "/(.*)",
+          "dest": "dist/serverless.js"
       }
   ]
 }
