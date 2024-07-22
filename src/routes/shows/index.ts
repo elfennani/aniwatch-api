@@ -20,12 +20,13 @@ const paramsSchema = z.object({
 const querySchema = z.object({
   page: z.coerce.number().optional().default(1),
   userId: z.coerce.number().optional(),
+  all: z.coerce.boolean().optional().default(false),
 })
 
 const showsByStatus: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.get<IRoute>('/:status', async function (request, reply): Promise<Show[]> {
     const { status } = request.validate(paramsSchema, 'params');
-    const { page, userId } = request.validate(querySchema, 'query');
+    const { page, userId, all } = request.validate(querySchema, 'query');
     const client = request.getAnilistClient();
 
     const id = userId || (await client.request(viewer_query)).Viewer?.id;
@@ -39,8 +40,8 @@ const showsByStatus: FastifyPluginAsync = async (fastify, opts): Promise<void> =
         userId: id,
         status: mapStatus(status),
         sort: ["UPDATED_TIME_DESC"],
-        chunk: page,
-        perChunk: 20
+        chunk: all ? 1 : page,
+        perChunk: all ? 500 : 20
       });
 
       return collection?.lists?.[0]?.entries?.map((entry) => {
