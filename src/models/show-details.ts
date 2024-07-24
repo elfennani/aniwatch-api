@@ -5,7 +5,7 @@ import { Tag } from "./tag.js"
 
 export interface ShowDetails {
   id: number
-  allanimeId: number
+  allanimeId: string
   name: string
   description: string
   episodesCount: number

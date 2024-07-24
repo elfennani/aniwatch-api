@@ -58,7 +58,7 @@ const showByID: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
 
     return {
       id: media?.id!,
-      allanimeId: media?.id!,
+      allanimeId: showId!,
       name: media?.title?.userPreferred!,
       description: media?.description!,
       episodesCount: media?.episodes!,
