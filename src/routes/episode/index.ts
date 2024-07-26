@@ -27,12 +27,6 @@ const episode: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     const { type } = request.validate(queryParams, 'query');
     const client = fastify.getAllAnimeClient();
 
-    console.log({
-      allanimeId,
-      episode,
-      type
-    })
-
     const response: QueryEpisode = await retry(
       () => client.request(query_episode, {
         showId: allanimeId,
