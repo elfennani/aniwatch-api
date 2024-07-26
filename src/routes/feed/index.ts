@@ -46,7 +46,7 @@ const showsByStatus: FastifyPluginAsync = async (fastify, opts): Promise<void> =
               user_id: activity.userId!,
               user_name: activity.user?.name!,
               user_avatar: activity.user?.avatar?.medium!,
-              created_at: new Date(activity.createdAt),
+              created_at: activity.createdAt,
               likes: activity.likeCount,
               replies: activity.replyCount,
               show: {
@@ -65,7 +65,7 @@ const showsByStatus: FastifyPluginAsync = async (fastify, opts): Promise<void> =
               user_id: activity.userId!,
               user_name: activity.user?.name!,
               user_avatar: activity.user?.avatar?.medium!,
-              created_at: new Date(activity.createdAt),
+              created_at: activity.createdAt,
               likes: activity.likeCount,
               replies: activity.replyCount,
             }

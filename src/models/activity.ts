@@ -10,7 +10,7 @@ export interface Activity {
     name: string;
     image: string;
   }
-  created_at: Date;
+  created_at: number;
   likes: number;
   replies: number;
 }
