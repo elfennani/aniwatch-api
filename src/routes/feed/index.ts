@@ -37,7 +37,7 @@ const showsByStatus: FastifyPluginAsync = async (fastify, opts): Promise<void> =
         ?.filter((activity) => activity?.__typename == "TextActivity" || activity?.__typename == "ListActivity")
         ?.map((activity): Activity => {
           if (activity?.__typename == "ListActivity") {
-            let content = [activity.status, activity.progress, activity.media?.title?.userPreferred]
+            let content = [activity.status, activity.progress && `${activity.progress} of`, activity.media?.title?.userPreferred]
 
             return {
               id: activity.id,
@@ -53,6 +53,8 @@ const showsByStatus: FastifyPluginAsync = async (fastify, opts): Promise<void> =
                 id: activity.media?.id!,
                 name: activity.media?.title?.userPreferred!,
                 image: activity.media?.coverImage?.large!,
+                type: activity.media?.type!,
+                year: activity.media?.seasonYear || undefined,
               }
             }
           }

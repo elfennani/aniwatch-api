@@ -9,6 +9,8 @@ export interface Activity {
     id: number;
     name: string;
     image: string;
+    type: "ANIME" | "MANGA";
+    year?: number;
   }
   created_at: number;
   likes: number;

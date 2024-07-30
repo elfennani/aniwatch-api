@@ -53,6 +53,23 @@ const showByID: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
         duration: ep.vidInforssub?.vidDuration,
         dubbed: show?.availableEpisodesDetail.dub.includes(String(ep.episodeIdNum)) ?? false
       })) ?? [];
+
+      episodes = show.availableEpisodesDetail.sub.map(ep => {
+        const details = allAnimeEpisodes.episodeInfos.find(info => info.episodeIdNum.toString() === ep);
+
+        return ({
+          id: details?._id ?? `EP-${ep}`,
+          allanimeId: showId,
+          animeId: id,
+          episode: details?.episodeIdNum ?? Number(ep),
+          name: `Ep ${ep}`,
+          thumbnail: details?.thumbnails
+            ?.filter((t) => !t.includes("cdnfile"))
+            ?.map(t => t.startsWith("http") ? t : (source + t))?.[0],
+          duration: details?.vidInforssub?.vidDuration,
+          dubbed: show.availableEpisodesDetail.dub.includes(String(ep)) ?? false
+        })
+      })
     }
 
 
