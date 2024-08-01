@@ -3,7 +3,7 @@
   "version": 2,
   "buildCommand": "npm run build",
   "functions": {
-    "serverless.js": {
+    "serverless.ts": {
       "includeFiles": "dist/**",
       "runtime": "@vercel/node@3.2.7"
     }
