@@ -1,7 +1,7 @@
 {
   "version": 2,
   "functions": {
-    "api/serverless.js": {
+    "src/api/serverless.js": {
       "runtime": "@vercel/node@3.2.7",
       "includeFiles": "dist/**"
     }
@@ -9,7 +9,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/src/api/serverless.js"
+      "destination": "/api/serverless.js"
     }
   ]
 }
