@@ -2,12 +2,16 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "buildCommand": "tsc",
-  "installCommand": "npm install",
-  "outputDirectory": "dist",
+  "functions": {
+    "api/serverless.js": {
+      "runtime": "@vercel/node@canary",
+      "includeFiles": ["dist/**"]
+    }
+  },
   "rewrites": [
     {
-      "source": "/:match*",
-      "destination": "serverless.js"
+      "source": "/(.*)",
+      "destination": "/api/serverless.js"
     }
   ]
 }
