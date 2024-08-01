@@ -4,6 +4,12 @@
   "buildCommand": "tsc",
   "installCommand": "npm install",
   "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "dist/serverless.js"
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",
