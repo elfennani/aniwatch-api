@@ -3,7 +3,7 @@
   "version": 2,
   "buildCommand": "tsc",
   "functions": {
-    "api/serverless.js": {
+    "dist/serverless.js": {
       "runtime": "@vercel/node@3.2.7",
       "includeFiles": "dist/**"
     }
