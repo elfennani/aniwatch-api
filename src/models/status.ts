@@ -4,7 +4,7 @@ export const statusSchema = z.enum(['watching', 'completed', 'on_hold', 'dropped
 
 export type Status = z.infer<typeof statusSchema>
 
-export const mapStatus = (status: Status) => {
+export const mapStatus = (status: Status | undefined | null) => {
   switch (status) {
     case 'watching':
       return 'CURRENT'
@@ -18,6 +18,8 @@ export const mapStatus = (status: Status) => {
       return 'PAUSED'
     case 'repeating':
       return 'REPEATING'
+    default:
+      return undefined
   }
 }
 
