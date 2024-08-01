@@ -1,12 +1,9 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "buildCommand": "tsc",
-  "outputDirectory": "dist",
   "functions": {
-    "dist/serverless.js": {
-      "runtime": "@vercel/node@3.2.7",
-      "includeFiles": "dist/**"
+    "api/serverless.js": {
+      "runtime": "@vercel/node@canary",
+      "includeFiles": ["dist/**"]
     }
   },
   "rewrites": [
