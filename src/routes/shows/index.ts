@@ -38,7 +38,7 @@ const showsByStatus: FastifyPluginAsync = async (fastify, opts): Promise<void> =
     try {
       const { collection } = await client.request(media_query, {
         userId: id,
-        status: mapStatus(status),
+        status: mapStatus(status)!,
         sort: ["UPDATED_TIME_DESC"],
         chunk: all ? 1 : page,
         perChunk: all ? 500 : 20

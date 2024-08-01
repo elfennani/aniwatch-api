@@ -1,16 +1,20 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
+  "buildCommand": "npm run tsc",
+  "installCommand": "npm install",
+  "outputDirectory": "dist",
   "builds": [
-      {
-          "src": "dist/serverless.js",
-          "use": "@vercel/node",
-          "config": { "includeFiles": ["dist/**"] }
-      }
+    {
+      "src": "dist/serverless.js",
+      "use": "@vercel/node",
+      "config": { "includeFiles": ["dist/**"] }
+    }
   ],
   "routes": [
-      {
-          "src": "/(.*)",
-          "dest": "dist/serverless.js"
-      }
+    {
+      "src": "/(.*)",
+      "dest": "dist/serverless.js"
+    }
   ]
 }
