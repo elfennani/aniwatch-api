@@ -6,8 +6,8 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "dist/serverless.js"
+      "source": "/:match*",
+      "destination": "serverless.js"
     }
   ]
 }
