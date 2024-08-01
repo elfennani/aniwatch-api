@@ -1,15 +1,16 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "functions": {
-    "src/api/serverless.js": {
-      "runtime": "@vercel/node@3.2.7",
-      "includeFiles": "dist/**"
+    "/dist/serverless.js": {
+      "includeFiles": "dist/**",
+      "runtime": "@vercel/node@3.2.7"
     }
   },
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/api/serverless.js"
+      "destination": "/dist/serverless.js"
     }
   ]
 }
