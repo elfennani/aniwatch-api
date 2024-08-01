@@ -4,13 +4,6 @@
   "buildCommand": "npm run tsc",
   "installCommand": "npm install",
   "outputDirectory": "dist",
-  "builds": [
-    {
-      "src": "dist/serverless.js",
-      "use": "@vercel/node",
-      "config": { "includeFiles": ["dist/**"] }
-    }
-  ],
   "routes": [
     {
       "src": "/(.*)",
