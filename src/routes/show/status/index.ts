@@ -8,9 +8,7 @@ const paramsSchema = z.object({
   id: z.coerce.number(),
 });
 
-const bodySchema = z.object({
-  data: statusDetailsSchema,
-})
+const bodySchema = statusDetailsSchema
 
 const showStatusByID: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.get("/:id", async function (request, reply): Promise<StatusDetails> {
@@ -55,7 +53,7 @@ const showStatusByID: FastifyPluginAsync = async (fastify, opts): Promise<void> 
   });
   fastify.post("/:id", async function (request, reply) {
     const { id } = request.validate(paramsSchema, "params");
-    const { data } = request.validate(bodySchema, "body");
+    const data = request.validate(bodySchema, "body");
 
     const client = request.getAnilistClient();
 

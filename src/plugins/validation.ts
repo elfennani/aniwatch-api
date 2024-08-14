@@ -17,7 +17,7 @@ export default fp<SupportPluginOptions>(async (fastify, opts) => {
 
     const parsed = schema.safeParse(data);
     if (parsed.error) {
-      throw fastify.httpErrors.badRequest(parsed.error.errors.map((err) => err.message).join(', '));
+      throw fastify.httpErrors.badRequest(JSON.stringify(parsed.error));
     }
 
     return parsed.data

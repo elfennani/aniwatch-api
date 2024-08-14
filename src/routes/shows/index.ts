@@ -1,8 +1,9 @@
-import { FastifyPluginAsync, RouteGenericInterface } from "fastify"
-import { z } from "zod"
+import { FastifyPluginAsync, RouteGenericInterface } from "fastify";
+import { z } from "zod";
 import { Show } from "../../models/show.js";
 import { graphql } from "gql.tada";
-import { mapStatus, reverseMapStatus } from "../../models/status.js";
+import { mapStatus } from "../../models/status.js";
+import { queryToShow, showFragment } from "../../fragments/show.js";
 
 interface IRoute extends RouteGenericInterface {
   Params: {
@@ -44,22 +45,11 @@ const showsByStatus: FastifyPluginAsync = async (fastify, opts): Promise<void> =
         perChunk: all ? 500 : 20
       });
 
-      return collection?.lists?.[0]?.entries?.map((entry) => {
-        return ({
-          id: entry?.media?.id!,
-          name: entry?.media?.title?.userPreferred!,
-          description: entry?.media?.description!,
-          episodes: entry?.media?.episodes!,
-          progress: entry?.media?.mediaListEntry?.progress || undefined,
-          status: reverseMapStatus(entry?.media?.mediaListEntry?.status || undefined),
-          image: {
-            large: entry?.media?.coverImage?.large!,
-            color: entry?.media?.coverImage?.color || undefined,
-            medium: entry?.media?.coverImage?.medium!,
-            original: entry?.media?.coverImage?.extraLarge!,
-          },
-        } satisfies Show) ?? [];
-      }) || [];
+      return collection
+        ?.lists
+        ?.[0]
+        ?.entries
+        ?.map((entry) => queryToShow(entry?.media!)) || [];
     } catch (_) {
       throw fastify.httpErrors.internalServerError("Something went wrong");
     }
@@ -81,29 +71,14 @@ const media_query = graphql(`
     ) {
       lists {
         entries {
-          media {
-            id
-            title {
-              userPreferred
-            }
-            episodes
-            description
-            coverImage {
-              extraLarge
-              medium
-              large
-              color
-            }
-            mediaListEntry{
-              progress
-              status
-            } 
+          media{
+            ...ShowFragment
           }
         }
       }
     }
   }
-`);
+`, [showFragment]);
 
 const viewer_query = graphql(`
   query ViewerQuery {
