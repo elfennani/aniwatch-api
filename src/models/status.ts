@@ -10,11 +10,11 @@ export const mapStatus = (status: Status | undefined | null) => {
       return 'CURRENT'
     case 'completed':
       return 'COMPLETED'
-    case 'on_hold':
+    case 'plan_to_watch':
       return 'PLANNING'
     case 'dropped':
       return 'DROPPED'
-    case 'plan_to_watch':
+    case 'on_hold':
       return 'PAUSED'
     case 'repeating':
       return 'REPEATING'

@@ -22,7 +22,6 @@ const PROVIDERS = [...M3U8_PROVIDERS, ...MP4_PROVIDERS];
 
 const episode: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.get('/:allanimeId/:episode', async function (request, reply) {
-    console.log("first")
     const { allanimeId, episode } = request.validate(paramsSchema, 'params');
     const { type } = request.validate(queryParams, 'query');
     const client = fastify.getAllAnimeClient();

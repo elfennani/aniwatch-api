@@ -13,4 +13,6 @@ export interface Show {
     original: string;
     color?: string;
   };
+  banner?: string;
+  updatedAt?: number;
 }
