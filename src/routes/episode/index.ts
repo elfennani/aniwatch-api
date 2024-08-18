@@ -39,7 +39,6 @@ const episode: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
       throw fastify.httpErrors.notFound("Episode not found")
     }
 
-
     const providers = response.episode.sourceUrls
       .filter((url) => PROVIDERS.includes(url.sourceName))
       .reduce(
@@ -56,7 +55,6 @@ const episode: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
         {} as Record<string, string>
       );
 
-
     const [hls, mp4] = await Promise.all([getHlsLink(providers), getMp4Link(providers)]);
 
     return {
@@ -70,42 +68,50 @@ const episode: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
 export default episode
 
 const getHlsLink = async (providers: Record<string, string>): Promise<HlsSource | undefined> => {
-  const provider = Object.keys(providers).find((key) => M3U8_PROVIDERS.includes(key));
-  if (!provider) return;
-  const source = providers[provider]
+  for (const hlsProvider of M3U8_PROVIDERS) {
+    try {
+      const provider = Object.keys(providers).find((key) => hlsProvider == key);
+      if (!provider) continue;
+      const source = providers[provider]
 
-  const res = await fetch(source);
-  const data: any = await res.json();
+      const res = await fetch(source);
+      const data: any = await res.json();
 
-  const link = data.links?.[0].link;
-  if (!link) return;
-  const hlsRes = await fetch(link);
-  const hlsData = parse(await hlsRes.text()) as MasterPlaylist
-  const variants = hlsData.variants.filter(v => !v.isIFrameOnly);
+      const link = data.links?.[0].link;
+      if (!link) return;
+      const hlsRes = await fetch(link);
+      const hlsData = parse(await hlsRes.text()) as MasterPlaylist
+      const variants = hlsData.variants.filter(v => !v.isIFrameOnly);
 
-  const hlsBaseUrl = link.split("/").slice(0, -1).join("/") + "/";
+      const hlsBaseUrl = link.split("/").slice(0, -1).join("/") + "/";
 
-  return {
-    originalUrl: link,
-    resolutions: variants.reduce((prev, variant) => {
-      if (!variant.resolution) return prev;
-      return ({
-        ...prev,
-        [variant.resolution.height]: variant.uri.startsWith("http") ? variant.uri : hlsBaseUrl + variant.uri
-      });
-    }, {} as Record<string, string>)
+      return {
+        originalUrl: link,
+        resolutions: variants.reduce((prev, variant) => {
+          if (!variant.resolution) return prev;
+          return ({
+            ...prev,
+            [variant.resolution.height]: variant.uri.startsWith("http") ? variant.uri : hlsBaseUrl + variant.uri
+          });
+        }, {} as Record<string, string>)
+      }
+    } catch (_) { }
   }
 }
 
 const getMp4Link = async (providers: Record<string, string>): Promise<string | undefined> => {
-  const provider = Object.keys(providers).find((key) => MP4_PROVIDERS.includes(key));
-  if (!provider) return;
-  const source = providers[provider]
+  for (const mp4Provider of MP4_PROVIDERS) {
+    try {
+      const provider = Object.keys(providers).find((key) => mp4Provider == key);
+      if (!provider) continue;
+      const source = providers[provider]
 
-  const res = await fetch(source);
-  const data: any = await res.json();
+      const res = await fetch(source);
+      const data: any = await res.json();
 
-  return data.links?.[0].link || data.links?.[0].src;
+      return data.links?.[0].link || data.links?.[0].src;
+    } catch (_) { }
+  }
 }
 
 interface QueryEpisode {

@@ -30,11 +30,11 @@ export const reverseMapStatus = (status: string | undefined | null) => {
     case 'COMPLETED':
       return 'completed'
     case 'PLANNING':
-      return 'on_hold'
+      return 'plan_to_watch'
     case 'DROPPED':
       return 'dropped'
     case 'PAUSED':
-      return 'plan_to_watch'
+      return 'on_hold'
     case 'REPEATING':
       return 'repeating'
   }

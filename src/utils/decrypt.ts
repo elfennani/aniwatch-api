@@ -34,6 +34,8 @@ const decrypt = (string: string) => {
   if (string == "55") return "m";
   if (string == "4d") return "u";
   if (string == "16") return ".";
+
+  console.warn("MAP_FAIL", string)
   return string;
 };
 
