@@ -8,7 +8,7 @@
       { 
         "name": "gql.tada/ts-plugin", 
         "schema": "https://graphql.anilist.co/graphql", 
-        "tadaOutputLocation": "./src/graphql-env.d.ts"
+        "tadaOutputLocation": "./src/graphql-env.d.ts",
       } 
     ] 
   },

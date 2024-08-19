@@ -38,7 +38,7 @@ export default characters
 const media_query = graphql(`
   query GetCharacters($id: Int!, $page: Int!) {
     media:Media(id: $id){
-      characters(page: $page,perPage: 25){
+      characters(page: $page,perPage: 25,sort: [ROLE]){
         edges{
           ...CharacterFragment
         }
