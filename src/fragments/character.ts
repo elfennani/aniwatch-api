@@ -31,7 +31,7 @@ export const characterFragment = graphql(`
 
 export const formatCharacter = (character: FragmentOf<typeof characterFragment>): Character => {
   return {
-    id: character.id!,
+    id: character.node.id,
     name: character.node?.name?.userPreferred!,
     image: character.node?.image?.large || undefined,
     image_sd: character.node?.image?.medium || undefined,
